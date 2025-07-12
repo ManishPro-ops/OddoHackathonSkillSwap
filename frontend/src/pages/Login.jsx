@@ -2,40 +2,33 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const LoginPage = () => {
-  const [emailOrUsername, setEmailOrUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
-    if (!emailOrUsername || !password) {
+    if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
 
     setError('');
-    const result = await verifyLogin(emailOrUsername, password);
-    if (result.success) {
-      alert('Login successful');
-    } else {
-      setError(result.message);
-    }
-  };
-
-  const verifyLogin = async (emailOrUsername, password) => {
     try {
       const response = await axios.post('http://localhost:5000/api/login', {
-        emailOrUsername,
-        password,
+        email: email,
+        password: password,
       });
 
       if (response.status === 200) {
-        return { success: true };
+        alert('Login successful');
+      } else {
+        setError('Unexpected error. Try again.');
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        return { success: false, message: 'Username or password is incorrect' };
+        setError('Username or password is incorrect');
       } else {
-        return { success: false, message: 'Something went wrong. Try again.' };
+        setError('Something went wrong. Try again.');
       }
     }
   };
@@ -63,12 +56,12 @@ const LoginPage = () => {
           )}
 
           <div className="mb-4">
-            <label className="block text-[#3585c0] font-semibold mb-1">Email or Username</label>
+            <label className="block text-[#3585c0] font-semibold mb-1">Email</label>
             <input
-              type="text"
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-#2f76ac"
-              value={emailOrUsername}
-              onChange={(e) => setEmailOrUsername(e.target.value)}
+              type="email"
+              className="w-full p-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2f76ac]"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -76,7 +69,7 @@ const LoginPage = () => {
             <label className="block text-[#3585c0] font-semibold mb-1">Password</label>
             <input
               type="password"
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-#2f76ac"
+              className="w-full p-2 border text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2f76ac]"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
