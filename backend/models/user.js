@@ -1,54 +1,40 @@
 const mongoose = require('mongoose');
 
-const skill_offered = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
 
-    skill_name:{
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
 
-        type:String,
+  password: {
+    type: String,
+    required: true
+  },
 
-    }
+  location: {
+    type: String,
+    required: true
+  },
 
-});
+  skillsOffered: {
+    type: [String], // array of skill names
+    default: []
+  },
 
-const skill_request = new mongoose.Schema({
+  skillsWanted: {
+    type: [String], // array of skill names
+    default: []
+  },
 
-    skill_name:{
+  dp: {
+    type: String // optional: URL or filename of profile picture
+  }
+}, { timestamps: true });
 
-        type:String,
-
-    }
-
-});
-
-const user = new mongoose.Schema({
-
-    name:{
-
-        type:String,
-        required:true
-
-    },
-    email:{
-
-        type:String,
-        required:true,
-
-    },
-    password:{
-
-        type:String,
-        required:true,
-
-    },
-    location:{
-
-        type:String,
-        required:true,
-        
-    },
-    skill_offered:[skill_offered],
-    skill_request:[skill_request],
-
-});
-
-module.exports = mongoose.model("user",user);
+module.exports = mongoose.model("User", userSchema);

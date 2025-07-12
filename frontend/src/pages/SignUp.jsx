@@ -1,46 +1,29 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const skillOptions = [
-  "Web Development",
-  "App Development",
-  "UI/UX Design",
-  "Data Science",
-  "Machine Learning",
-  "Photography",
-  "Video Editing",
-  "Graphic Design",
-  "Drawing",
-  "Painting",
-  "Singing",
-  "Piano",
-  "Guitar",
-  "Dancing",
-  "Yoga",
-  "Public Speaking",
-  "Creative Writing",
-  "Cooking",
-  "Football",
-  "Basketball",
-  "Cricket",
-  "Fitness Training",
-  "Foreign Languages",
+  "Web Development", "App Development", "UI/UX Design", "Data Science", "Machine Learning",
+  "Photography", "Video Editing", "Graphic Design", "Drawing", "Painting",
+  "Singing", "Piano", "Guitar", "Dancing", "Yoga",
+  "Public Speaking", "Creative Writing", "Cooking", "Football", "Basketball",
+  "Cricket", "Fitness Training", "Foreign Languages"
 ];
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: "",
-    username: "",
     email: "",
-    location: "",
     password: "",
     confirmPassword: "",
-    dp: null,
+    location: "",
     skillsOffered: [],
     skillsWanted: [],
+    dp: null
   });
 
   const [showOfferDropdown, setShowOfferDropdown] = useState(false);
   const [showWantDropdown, setShowWantDropdown] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -52,151 +35,142 @@ const SignUp = () => {
   };
 
   const toggleSkill = (type, skill) => {
-    setFormData((prev) => {
-      const list = type === "offer" ? prev.skillsOffered : prev.skillsWanted;
-      const updated = list.includes(skill)
-        ? list.filter((s) => s !== skill)
-        : [...list, skill];
-
-      return {
-        ...prev,
-        [type === "offer" ? "skillsOffered" : "skillsWanted"]: updated,
-      };
-    });
-  };
-
-  const removeSkill = (type, skill) => {
+    const key = type === "offer" ? "skillsOffered" : "skillsWanted";
     setFormData((prev) => ({
       ...prev,
-      [type]: prev[type].filter((s) => s !== skill),
+      [key]: prev[key].includes(skill)
+        ? prev[key].filter((s) => s !== skill)
+        : [...prev[key], skill],
     }));
   };
 
-  const handleSubmit = (e) => {
+  const removeSkill = (key, skill) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: prev[key].filter((s) => s !== skill),
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     const {
-      name,
-      username,
-      email,
-      location,
-      password,
-      confirmPassword,
+      name, email, password, confirmPassword, location,
+      skillsOffered, skillsWanted, dp
     } = formData;
 
-    if (
-      !name ||
-      !username ||
-      !email ||
-      !location ||
-      !password ||
-      !confirmPassword
-    ) {
-      alert("Please fill all required fields");
+    if (!name || !email || !password || !confirmPassword || !location) {
+      setError("Please fill all required fields.");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setError("Passwords do not match.");
       return;
     }
 
-    console.log(formData);
-    // Submit using Axios or fetch if needed
+    try {
+      const payload = {
+        name,
+        email,
+        password,
+        location,
+        skillsOffered,
+        skillsWanted,
+        dp: dp ? dp.name : null
+      };
+
+      await axios.post("http://localhost:8000/api/signup", payload);
+      alert("Signup successful!");
+    } catch (err) {
+      console.error(err);
+      setError("Signup failed. Try again.");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white p-10 rounded-2xl shadow-md w-full max-w-2xl">
-        <h2 className="text-3xl font-extrabold text-center text-indigo-700 mb-8 tracking-wide">
-          Sign Up
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-xl">
+        <h2 className="text-3xl font-semibold mb-6 text-center" style={{ color: "#3585c2" }}>
+          Sign Up to Your Account
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <div className="bg-red-100 text-red-600 px-4 py-2 rounded-md text-center mb-4">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4 text-sm text-gray-700">
           <input
-            type="text"
             name="name"
+            type="text"
+            placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2"
             required
-            placeholder="Full Name"
-            className="w-full border px-4 py-2 rounded-lg"
           />
           <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            placeholder="Username"
-            className="w-full border px-4 py-2 rounded-lg"
-          />
-          <input
-            type="email"
             name="email"
+            type="email"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2"
             required
-            placeholder="Email"
-            className="w-full border px-4 py-2 rounded-lg"
           />
           <input
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            required
-            placeholder="Location"
-            className="w-full border px-4 py-2 rounded-lg"
-          />
-          <input
-            type="password"
             name="password"
+            type="password"
+            placeholder="Password"
             value={formData.password}
             onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2"
             required
-            placeholder="Create Password"
-            className="w-full border px-4 py-2 rounded-lg"
           />
           <input
-            type="password"
             name="confirmPassword"
+            type="password"
+            placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2"
             required
-            placeholder="Confirm Password"
-            className="w-full border px-4 py-2 rounded-lg"
           />
-
-          {/* DP is optional */}
           <input
-            type="file"
-            name="dp"
+            name="location"
+            type="text"
+            placeholder="Location"
+            value={formData.location}
             onChange={handleChange}
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2"
+            required
+          />
+          <input
+            name="dp"
+            type="file"
+            onChange={handleChange}
+            className="w-full text-sm text-gray-500 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-[#3585c2]/10 file:text-[#3585c2] hover:file:bg-[#3585c2]/20"
           />
 
           {/* Skills Offered */}
           <div className="relative">
-            <label className="block font-medium text-gray-700 mb-1">
-              Skills You Offer
-            </label>
+            <label className="font-medium text-gray-600">Skills You Offer</label>
             <div
               onClick={() => setShowOfferDropdown(!showOfferDropdown)}
-              className="w-full border rounded-lg px-4 py-2 cursor-pointer bg-white"
+              className="border border-gray-300 rounded-md px-4 py-2 bg-white cursor-pointer mt-1"
             >
-              Click to select skills
+              {formData.skillsOffered.length > 0
+                ? `${formData.skillsOffered.length} selected`
+                : "Select skills"}
             </div>
 
             {showOfferDropdown && (
-              <div className="absolute z-10 w-full bg-white border mt-1 rounded-lg shadow">
-                <div className="max-h-52 overflow-y-auto">
+              <div className="absolute w-full z-10 bg-white border rounded-md shadow-md mt-2">
+                <div className="max-h-52 overflow-y-auto p-2">
                   {skillOptions.map((skill) => (
-                    <label
-                      key={skill}
-                      className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
-                    >
+                    <label key={skill} className="block text-sm p-1">
                       <input
                         type="checkbox"
                         checked={formData.skillsOffered.includes(skill)}
@@ -211,7 +185,8 @@ const SignUp = () => {
                   <button
                     type="button"
                     onClick={() => setShowOfferDropdown(false)}
-                    className="bg-indigo-600 text-white px-4 py-1 rounded-md hover:bg-indigo-700 text-sm"
+                    className="px-4 py-1 text-sm rounded-md text-white"
+                    style={{ backgroundColor: "#3585c2" }}
                   >
                     Done
                   </button>
@@ -219,19 +194,15 @@ const SignUp = () => {
               </div>
             )}
 
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="flex flex-wrap mt-2 gap-2">
               {formData.skillsOffered.map((skill) => (
-                <span
-                  key={skill}
-                  className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm flex items-center"
-                >
+                <span key={skill} className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs">
                   {skill}
                   <button
-                    type="button"
                     onClick={() => removeSkill("skillsOffered", skill)}
-                    className="ml-2 text-red-500 hover:text-red-700"
+                    className="ml-1 text-red-500 font-bold"
                   >
-                    ✕
+                    ×
                   </button>
                 </span>
               ))}
@@ -240,24 +211,21 @@ const SignUp = () => {
 
           {/* Skills Wanted */}
           <div className="relative">
-            <label className="block font-medium text-gray-700 mb-1">
-              Skills You Want to Learn
-            </label>
+            <label className="font-medium text-gray-600">Skills You Want to Learn</label>
             <div
               onClick={() => setShowWantDropdown(!showWantDropdown)}
-              className="w-full border rounded-lg px-4 py-2 cursor-pointer bg-white"
+              className="border border-gray-300 rounded-md px-4 py-2 bg-white cursor-pointer mt-1"
             >
-              Click to select skills
+              {formData.skillsWanted.length > 0
+                ? `${formData.skillsWanted.length} selected`
+                : "Select skills"}
             </div>
 
             {showWantDropdown && (
-              <div className="absolute z-10 w-full bg-white border mt-1 rounded-lg shadow">
-                <div className="max-h-52 overflow-y-auto">
+              <div className="absolute w-full z-10 bg-white border rounded-md shadow-md mt-2">
+                <div className="max-h-52 overflow-y-auto p-2">
                   {skillOptions.map((skill) => (
-                    <label
-                      key={skill}
-                      className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
-                    >
+                    <label key={skill} className="block text-sm p-1">
                       <input
                         type="checkbox"
                         checked={formData.skillsWanted.includes(skill)}
@@ -272,7 +240,8 @@ const SignUp = () => {
                   <button
                     type="button"
                     onClick={() => setShowWantDropdown(false)}
-                    className="bg-indigo-600 text-white px-4 py-1 rounded-md hover:bg-indigo-700 text-sm"
+                    className="px-4 py-1 text-sm rounded-md text-white"
+                    style={{ backgroundColor: "#3585c2" }}
                   >
                     Done
                   </button>
@@ -280,19 +249,15 @@ const SignUp = () => {
               </div>
             )}
 
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="flex flex-wrap mt-2 gap-2">
               {formData.skillsWanted.map((skill) => (
-                <span
-                  key={skill}
-                  className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm flex items-center"
-                >
+                <span key={skill} className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
                   {skill}
                   <button
-                    type="button"
                     onClick={() => removeSkill("skillsWanted", skill)}
-                    className="ml-2 text-red-500 hover:text-red-700"
+                    className="ml-1 text-red-500 font-bold"
                   >
-                    ✕
+                    ×
                   </button>
                 </span>
               ))}
@@ -301,9 +266,10 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition mt-4"
+            className="w-full text-white py-2 rounded-md font-medium transition mt-2"
+            style={{ backgroundColor: "#3585c2" }}
           >
-            Register
+            Sign Up
           </button>
         </form>
       </div>
