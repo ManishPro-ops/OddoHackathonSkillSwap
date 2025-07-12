@@ -32,11 +32,15 @@ const LoginPage = () => {
         return { success: true };
       }
     } catch (err) {
-      if (err.response && err.response.status === 404) {
+
+      console.log(err);
+
+      if (err.response && err.response.status === 401) {
         return { success: false, message: 'Username or password is incorrect' };
       } else {
         return { success: false, message: 'Something went wrong. Try again.' };
       }
+      
     }
   };
 
