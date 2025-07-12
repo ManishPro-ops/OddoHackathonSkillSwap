@@ -3,7 +3,6 @@ const {compHashPass}= require('./authsrvice');
 
 async function login_user(req,res) {
     
-    
 
     try {
         
@@ -13,7 +12,7 @@ async function login_user(req,res) {
 
         if(userr){
 
-            const check = compHashPass(password,userr.password);
+            const check = await compHashPass(password,userr.password);
 
             if(!check){
 
