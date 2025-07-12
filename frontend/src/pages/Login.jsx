@@ -18,6 +18,7 @@ const LoginPage = () => {
     const result = await verifyLogin(emailOrUsername, password);
     if (result.success) {
       alert('Login successful');
+      navigate("/");
     } else if (result.userNotFound) {
       const goToSignup = window.confirm("User not found. Do you want to sign up?");
       if (goToSignup) navigate('/signup');
@@ -33,8 +34,11 @@ const LoginPage = () => {
         password,
       });
 
+      console.log(response);
+
       if (response.status === 200) {
         return { success: true };
+        
       }
     } catch (err) {
 
