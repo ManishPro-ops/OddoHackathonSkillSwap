@@ -4,14 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext'; // Adjust the path as needed
 
 const LoginPage = () => {
-  const [emailOrUsername, setEmailOrUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { setUser } = useUser();
 
   const handleLogin = async () => {
-    if (!emailOrUsername || !password) {
+    if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
@@ -44,7 +44,7 @@ const LoginPage = () => {
       if (err.response && err.response.status === 401) {
         return { success: false, message: 'Username or password is incorrect' };
       } else {
-        return { success: false, message: 'Something went wrong. Try again.' };
+        setError('Something went wrong. Try again.');
       }
     }
   };
