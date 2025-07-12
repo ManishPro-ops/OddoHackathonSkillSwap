@@ -1,38 +1,23 @@
-# Node modules
+# Node.js
 node_modules/
+.env
+dist/
+build/
 
 # Logs
-logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Runtime data
-pids/
-*.pid
-*.seed
-*.pid.lock
-
-# Environment variables
-.env
-
-# OS-specific files
+# OS files
 .DS_Store
 Thumbs.db
 
-# VS Code settings (optional)
+# IDEs
 .vscode/
+.idea/
 
-# Coverage directory used by testing tools
-coverage/
-
-# Build output (if any)
-dist/
-build/
-
-# Local MongoDB data (if used)
-dump/
-
-# Optional: PM2 logs
-pmlogs/
+# Dependency lock files (optional)
+package-lock.json
+yarn.lock
