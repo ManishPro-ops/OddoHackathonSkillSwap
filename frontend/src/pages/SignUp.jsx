@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const skillOptions = [
   "Web Development", "App Development", "UI/UX Design", "Data Science", "Machine Learning",
@@ -24,6 +25,7 @@ const SignUp = () => {
   const [showOfferDropdown, setShowOfferDropdown] = useState(false);
   const [showWantDropdown, setShowWantDropdown] = useState(false);
   const [error, setError] = useState("");
+  const navigate=useNavigate();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -82,6 +84,7 @@ const SignUp = () => {
 
       await axios.post("http://localhost:3000/odoo/create_user", payload);
       alert("Signup successful!");
+      navigate("/")
     } catch (err) {
       console.error(err);
       console.log(err);

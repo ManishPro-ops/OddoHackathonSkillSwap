@@ -3,13 +3,13 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const [emailOrUsername, setEmailOrUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    if (!emailOrUsername || !password) {
+    if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
@@ -47,7 +47,7 @@ const LoginPage = () => {
       if (err.response && err.response.status === 401) {
         return { success: false, message: 'Username or password is incorrect' };
       } else {
-        return { success: false, message: 'Something went wrong. Try again.' };
+        setError('Something went wrong. Try again.');
       }
       
     }
@@ -76,7 +76,7 @@ const LoginPage = () => {
           )}
 
           <div className="mb-4">
-            <label className="block text-[#3585c0] font-semibold mb-1">Email or Username</label>
+            <label className="block text-[#3585c0] font-semibold mb-1">Email</label>
             <input
               type="text"
               className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2f76ac]"
