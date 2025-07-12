@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const SearchBar = ({ selectedOption, setSelectedOption, searchTerm, setSearchTerm }) => {
+const SearchBar = ({
+  selectedOption,
+  setSelectedOption,
+  searchTerm,
+  setSearchTerm,
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -38,14 +43,19 @@ const SearchBar = ({ selectedOption, setSelectedOption, searchTerm, setSearchTer
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </button>
 
         {/* Dropdown Items */}
         {isDropdownOpen && (
           <div className="absolute mt-2 w-full md:w-44 bg-white border rounded-md shadow-lg z-20">
-            {["Availability", "Pending", "Requested"].map((option) => (
+            {["Availability", "Pending"].map((option) => (
               <button
                 key={option}
                 onClick={() => handleOptionClick(option)}

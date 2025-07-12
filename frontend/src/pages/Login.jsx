@@ -37,16 +37,11 @@ const LoginPage = () => {
         return { success: true };
       }
     } catch (err) {
-<<<<<<< HEAD
-      if (err.response && err.response.status === 404) {
-        return { success: false, userNotFound: true, message: 'User not found' };
-=======
 
       console.log(err);
 
       if (err.response && err.response.status === 401) {
         return { success: false, message: 'Username or password is incorrect' };
->>>>>>> af549db7449f364d98aa420e9376c717ef9aca8c
       } else {
         return { success: false, message: 'Something went wrong. Try again.' };
       }
