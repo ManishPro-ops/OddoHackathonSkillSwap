@@ -1,7 +1,7 @@
 // src/components/Navbar.jsx
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -28,9 +28,9 @@ const Navbar = () => {
           <a href="#" className="hover:text-[#3585c2] transition">Home</a>
           <a href="#" className="hover:text-[#3585c2] transition">About</a>
           <a href="#" className="hover:text-[#3585c2] transition">Contact</a>
-          <button className="cursor-pointer px-6 py-2 bg-[#3585c2] hover:bg-[#2d6ca1] transition text-white rounded-full">
+          <Link to="/login" className="cursor-pointer px-6 py-2 bg-[#3585c2] hover:bg-[#2d6ca1] transition text-white rounded-full">
             Login
-          </button>
+          </Link>
         </div>
 
         {/* Hamburger */}
@@ -61,9 +61,9 @@ const Navbar = () => {
           <a href="#" className="block w-full py-1 text-gray-700 hover:text-[#3585c2]">Home</a>
           <a href="#" className="block w-full py-1 text-gray-700 hover:text-[#3585c2]">About</a>
           <a href="#" className="block w-full py-1 text-gray-700 hover:text-[#3585c2]">Contact</a>
-          <button className="cursor-pointer px-6 py-2 mt-2 bg-[#3585c2] hover:bg-[#2d6ca1] transition text-white rounded-full text-sm">
+          <Link to="/login" className="cursor-pointer px-6 py-2 mt-2 bg-[#3585c2] hover:bg-[#2d6ca1] transition text-white rounded-full text-sm">
             Login
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

@@ -21,10 +21,10 @@ const LoginPage = () => {
     }
   };
 
-  const verifyLogin = async (emailOrUsername, password) => {
+  const verifyLogin = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/login', {
-        emailOrUsername,
+      const response = await axios.post('http://localhost:3000/odoo/login', {
+        email,
         password,
       });
 
