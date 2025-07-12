@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const dbconnect = require('./congif/dbconnect');
+const router = require("./routes/router");
 
 
 app.use(express.json());
@@ -13,6 +14,8 @@ app.get("/",(req,res) => {
     res.send("this is home page");
 
 });
+
+app.use("/odoo",router);
 
 app.listen(process.env.PORT,() => {
 
