@@ -10,6 +10,17 @@ async function create_user(req,res) {
 
         const newpass = await hashpass(password);
 
+        const us = await user.findOne({email});
+
+        if(us){
+            res.status(401).json({
+
+                success:false,
+                message:"user already exisited",
+
+            });
+        }
+
         const repo = await user.create({name,email,password:newpass,location,skill_request,skill_offered});
 
         if(!repo){
