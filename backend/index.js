@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
-const dbconnect = require('./congif/dbconnect');
+const dbconnect = require('./config/dbconnect');
+const router = require("./routes/router");
+
 
 
 app.use(express.json());
