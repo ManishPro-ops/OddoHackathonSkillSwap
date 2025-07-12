@@ -26,20 +26,30 @@ const HomePage = () => {
   };
 
   return (
-    <>
+    <div className="bg-gray-100 min-h-screen">
       <Navbar />
-      <SearchBar />
+      <div className="max-w-6xl mx-auto px-4">
+        <SearchBar />
 
-      {currentUsers.map((user) => (
-        <UserCard key={user.id} user={user} onRequest={handleRequest} />
-      ))}
+        <div className="mt-8 space-y-8">
+          {currentUsers.length === 0 ? (
+            <p className="text-center text-gray-500 mt-10">No users found.</p>
+          ) : (
+            currentUsers.map((user) => (
+              <UserCard key={user.id} user={user} onRequest={handleRequest} />
+            ))
+          )}
+        </div>
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
-    </>
+        <div className="flex justify-center mt-8">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 

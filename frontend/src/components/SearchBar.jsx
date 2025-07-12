@@ -18,26 +18,22 @@ const SearchBar = () => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <div className=" flex items-center space-x-2 justify-end mt-30 mr-60" ref={dropdownRef}>
+    <div
+      className="flex items-center justify-end mt-24 mb-8 mr-10 gap-4"
+      ref={dropdownRef}
+    >
       {/* Dropdown */}
       <div className="relative">
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="bg-gray-800 text-white px-4 py-2 rounded-md flex items-center space-x-2 border border-white"
+          className="bg-[#3585c2] text-white px-4 py-2 rounded-md flex items-center space-x-2 border border-[#3585c2] hover:bg-[#2c6fa3]"
         >
           <span>{selectedOption}</span>
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -66,13 +62,13 @@ const SearchBar = () => {
       </div>
 
       {/* Search Input */}
-      <div className="flex border border-gray-500 rounded-md overflow-hidden">
+      <div className="flex border border-gray-500 rounded-md overflow-hidden bg-white">
         <input
           type="text"
           placeholder="Search"
-          className="px-4 py-2 bg-white text-black placeholder-gray-500 outline-none"
+          className="px-4 py-2 text-black placeholder-gray-500 outline-none"
         />
-        <button className="bg-blue-500 text-white px-4 py-2 hover:bg-gray-900 cursor-pointer">
+        <button className="bg-[#3585c2] text-white px-4 py-2 hover:bg-[#2c6fa3]">
           Search
         </button>
       </div>
