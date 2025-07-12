@@ -1,14 +1,12 @@
-import SignUp from "./pages/SignUp"
-
+import React from "react";
+import HomePage from "./pages/HomePage";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-  
-
-  return (
-    <>
-      <SignUp/>
-    </>
-  )
-}
-
-export default App
+  return(
+    <Routes>
+      <Route path="/" element={<HomePage />}/>
+   </Routes>
+)}
+ 
+export default App;

@@ -22,12 +22,12 @@ const userSchema = new mongoose.Schema({
     required: true
   },
 
-  skillsOffered: {
+  skill_offered: {
     type: [String], // array of skill names
     default: []
   },
 
-  skillsWanted: {
+  skill_request: {
     type: [String], // array of skill names
     default: []
   },
