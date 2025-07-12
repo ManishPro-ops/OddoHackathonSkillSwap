@@ -16,8 +16,8 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
     location: "",
-    skillsOffered: [],
-    skillsWanted: [],
+    skill_offered: [],
+    skill_request: [],
     dp: null
   });
 
@@ -35,7 +35,7 @@ const SignUp = () => {
   };
 
   const toggleSkill = (type, skill) => {
-    const key = type === "offer" ? "skillsOffered" : "skillsWanted";
+    const key = type === "offer" ? "skill_offered" : "skill_request";
     setFormData((prev) => ({
       ...prev,
       [key]: prev[key].includes(skill)
@@ -56,7 +56,7 @@ const SignUp = () => {
 
     const {
       name, email, password, confirmPassword, location,
-      skillsOffered, skillsWanted, dp
+      skill_offered, skill_request, dp
     } = formData;
 
     if (!name || !email || !password || !confirmPassword || !location) {
@@ -75,15 +75,16 @@ const SignUp = () => {
         email,
         password,
         location,
-        skillsOffered,
-        skillsWanted,
+        skill_offered,
+        skill_request,
         dp: dp ? dp.name : null
       };
 
-      await axios.post("http://localhost:8000/api/signup", payload);
+      await axios.post("http://localhost:3000/odoo/create_user", payload);
       alert("Signup successful!");
     } catch (err) {
       console.error(err);
+      console.log(err);
       setError("Signup failed. Try again.");
     }
   };
@@ -161,8 +162,8 @@ const SignUp = () => {
               onClick={() => setShowOfferDropdown(!showOfferDropdown)}
               className="border border-gray-300 rounded-md px-4 py-2 bg-white cursor-pointer mt-1"
             >
-              {formData.skillsOffered.length > 0
-                ? `${formData.skillsOffered.length} selected`
+              {formData.skill_offered.length > 0
+                ? `${formData.skill_offered.length} selected`
                 : "Select skills"}
             </div>
 
@@ -173,7 +174,7 @@ const SignUp = () => {
                     <label key={skill} className="block text-sm p-1">
                       <input
                         type="checkbox"
-                        checked={formData.skillsOffered.includes(skill)}
+                        checked={formData.skill_offered.includes(skill)}
                         onChange={() => toggleSkill("offer", skill)}
                         className="mr-2"
                       />
@@ -195,11 +196,11 @@ const SignUp = () => {
             )}
 
             <div className="flex flex-wrap mt-2 gap-2">
-              {formData.skillsOffered.map((skill) => (
+              {formData.skill_offered.map((skill) => (
                 <span key={skill} className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs">
                   {skill}
                   <button
-                    onClick={() => removeSkill("skillsOffered", skill)}
+                    onClick={() => removeSkill("skill_offered", skill)}
                     className="ml-1 text-red-500 font-bold"
                   >
                     ×
@@ -216,8 +217,8 @@ const SignUp = () => {
               onClick={() => setShowWantDropdown(!showWantDropdown)}
               className="border border-gray-300 rounded-md px-4 py-2 bg-white cursor-pointer mt-1"
             >
-              {formData.skillsWanted.length > 0
-                ? `${formData.skillsWanted.length} selected`
+              {formData.skill_request.length > 0
+                ? `${formData.skill_request.length} selected`
                 : "Select skills"}
             </div>
 
@@ -228,7 +229,7 @@ const SignUp = () => {
                     <label key={skill} className="block text-sm p-1">
                       <input
                         type="checkbox"
-                        checked={formData.skillsWanted.includes(skill)}
+                        checked={formData.skill_request.includes(skill)}
                         onChange={() => toggleSkill("want", skill)}
                         className="mr-2"
                       />
@@ -250,11 +251,11 @@ const SignUp = () => {
             )}
 
             <div className="flex flex-wrap mt-2 gap-2">
-              {formData.skillsWanted.map((skill) => (
+              {formData.skill_request.map((skill) => (
                 <span key={skill} className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
                   {skill}
                   <button
-                    onClick={() => removeSkill("skillsWanted", skill)}
+                    onClick={() => removeSkill("skill_request", skill)}
                     className="ml-1 text-red-500 font-bold"
                   >
                     ×
