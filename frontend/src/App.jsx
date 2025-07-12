@@ -1,17 +1,22 @@
 import React from "react";
-import HomePage from "./pages/HomePage";
 import { Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import { UserProvider } from "./context/UserContext";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
-  return(
-    <Routes>
-      <Route path="/" element={<HomePage />}/>
-      <Route path="/login" element={<LoginPage />}/>
-      <Route path="/signup" element={<SignUp />}/>
+  return (
+    <UserProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>
+    </UserProvider>
+  );
+}
 
-   </Routes>
-)}
- 
 export default App;

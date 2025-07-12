@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext"; // Make sure path is correct
 
 const skillOptions = [
   "Web Development", "App Development", "UI/UX Design", "Data Science", "Machine Learning",
@@ -25,7 +26,8 @@ const SignUp = () => {
   const [showOfferDropdown, setShowOfferDropdown] = useState(false);
   const [showWantDropdown, setShowWantDropdown] = useState(false);
   const [error, setError] = useState("");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+  const { setUser } = useUser(); // ⬅️ Update user in global context
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -83,11 +85,13 @@ const SignUp = () => {
       };
 
       await axios.post("http://localhost:3000/odoo/create_user", payload);
+
+      // ✅ Automatically log in user
+      setUser({ name, email });
       alert("Signup successful!");
-      navigate("/")
+      navigate("/");
     } catch (err) {
       console.error(err);
-      console.log(err);
       setError("Signup failed. Try again.");
     }
   };
@@ -213,7 +217,7 @@ const SignUp = () => {
             </div>
           </div>
 
-          {/* Skills Wanted */}
+          {/* Skills Requested */}
           <div className="relative">
             <label className="font-medium text-gray-600">Skills You Want to Learn</label>
             <div
