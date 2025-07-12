@@ -11,7 +11,7 @@ const UserCard = ({ user, onRequest }) => {
         {/* Profile Image */}
         <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-[#3585c2] overflow-hidden shadow-sm">
           <img
-            src="priyanshu.jpg"
+            src="ptemp.jpg"
             alt="Profile"
             className="w-full h-full object-cover"
           />
