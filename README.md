@@ -22,6 +22,8 @@ A modern skill exchange platform built using **React** and **Tailwind CSS** wher
 
 ---
 
+## Video Link: https://drive.google.com/file/d/1BfDe3FydvLD2HO1TmqogZ0APR_mRRTip/view?usp=drivesdk
+
 ## 🚀 Features
 
 - 👤 User registration and login
