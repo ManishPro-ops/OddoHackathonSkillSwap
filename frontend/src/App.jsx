@@ -1,29 +1,17 @@
-import React from 'react';
-// import Login from './pages/Login';
-import { Routes, Route } from 'react-router-dom';
-import ProfilePage from './pages/ProfilePage';
-import ProfileEdit from './pages/ProfileEdit';
+import React from "react";
+import HomePage from "./pages/HomePage";
+import { Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<ProfilePage />} />
-      <Route path="/edit" element={<ProfileEdit />} />
-    </Routes>
-    // <>
-    // </>
-  );
-}
+      <Route path="/" element={<HomePage />}/>
+      <Route path="/login" element={<LoginPage />}/>
+      <Route path="/signup" element={<SignUp />}/>
 
-// import React from "react";
-// import HomePage from "./pages/HomePage";
-// import { Route, Routes } from "react-router-dom";
-
-// function App() {
-//   return(
-//     <Routes>
-//       <Route path="/" element={<HomePage />}/>
-//    </Routes>
-// )}
+   </Routes>
+)}
  
 export default App;
