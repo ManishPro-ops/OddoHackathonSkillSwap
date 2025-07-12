@@ -1,5 +1,4 @@
-// src/pages/HomePage.jsx
-
+// HomePage.jsx
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
@@ -8,46 +7,59 @@ import Pagination from "../components/Pagination";
 import { users as allUsers } from "../assets/users";
 
 const HomePage = () => {
+  const [selectedOption, setSelectedOption] = useState("Availability");
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 3;
+  const usersPerPage = 2;
 
+  const status = selectedOption.toLowerCase() === "availability" ? "available" : "pending";
+
+  // Filter by status and search
+  const filteredUsers = allUsers.filter((user) => {
+    const matchStatus = user.status === status;
+    const matchSearch =
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.skillsOffered.some((skill) =>
+        skill.toLowerCase().includes(searchTerm.toLowerCase())
+      ) ||
+      user.skillsWanted.some((skill) =>
+        skill.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+    return matchStatus && matchSearch;
+  });
+
+  // Pagination
   const startIndex = (currentPage - 1) * usersPerPage;
-  const endIndex = startIndex + usersPerPage;
-  const currentUsers = allUsers.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(allUsers.length / usersPerPage);
-
-  const handleRequest = (userId) => {
-    const isLoggedIn = true; // Replace with real auth check
-    if (!isLoggedIn) {
-      alert("Please log in to send a request.");
-      return;
-    }
-    alert(`Request sent to user ID: ${userId}`);
-  };
+  const currentUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-4">
-        <SearchBar />
 
-        <div className="mt-8 space-y-8">
-          {currentUsers.length === 0 ? (
-            <p className="text-center text-gray-500 mt-10">No users found.</p>
-          ) : (
-            currentUsers.map((user) => (
-              <UserCard key={user.id} user={user} onRequest={handleRequest} />
-            ))
-          )}
-        </div>
+      <SearchBar
+        selectedOption={selectedOption}
+        setSelectedOption={setSelectedOption}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
-        <div className="flex justify-center mt-8">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
-        </div>
+      <div className="mt-8">
+        {filteredUsers.length === 0 ? (
+          <p className="text-center text-gray-500">No users found</p>
+        ) : (
+          <>
+            {currentUsers.map((user) => (
+              <UserCard key={user.id} user={user} onRequest={() => {}} />
+            ))}
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.ceil(filteredUsers.length / usersPerPage)}
+              onPageChange={setCurrentPage}
+            />
+          </>
+        )}
       </div>
     </div>
   );

@@ -7,7 +7,8 @@ export const users = [
     skillsOffered: ["JavaScript", "Python"],
     skillsWanted: ["React", "Graphic Design"],
     rating: 4.2,
-    image: "/marc.jpg", // Public image path
+    image: "/marc.jpg",
+    status: "available", // Public image path
   },
   {
     id: "2",
@@ -16,6 +17,7 @@ export const users = [
     skillsWanted: ["Vue", "UI/UX"],
     rating: 3.8,
     image: "/michell.jpg",
+    status: "available",
   },
   {
     id: "3",
@@ -24,6 +26,7 @@ export const users = [
     skillsWanted: ["Rust", "Svelte"],
     rating: 4.5,
     image: "/joe.jpg",
+    status: "available",
   },
   {
     id: "4",
@@ -32,6 +35,7 @@ export const users = [
     skillsWanted: ["React", "Figma"],
     rating: 4.0,
     image: "/priya.jpg",
+    status: "available",
   },
   {
     id: "5",
@@ -40,6 +44,7 @@ export const users = [
     skillsWanted: ["Firebase", "AWS"],
     rating: 3.9,
     image: "/rahul.jpg",
+    status: "available",
   },
    {
     id: "6",
@@ -48,53 +53,60 @@ export const users = [
     skillsWanted: ["Firebase", "AWS"],
     rating: 3.9,
     image: "/rahul.jpg",
+    status: "available",
   },
    {
     id: "7",
-    name: "Marc Demo",
+    name: "priyanshu",
     skillsOffered: ["JavaScript", "Python"],
     skillsWanted: ["React", "Graphic Design"],
     rating: 4.2,
-    image: "/marc.jpg", // Public image path
+    image: "/marc.jpg",
+    status: "pending", // Public image path
   },
   {
     id: "8",
-    name: "Michell Lee",
+    name: "priyanshu",
     skillsOffered: ["Node.js", "Express"],
     skillsWanted: ["Vue", "UI/UX"],
     rating: 3.8,
     image: "/michell.jpg",
+    status: "pending",
   },
   {
     id: "9",
-    name: "Joe Wills",
+    name: "priyanshu",
     skillsOffered: ["C++", "Go"],
     skillsWanted: ["Rust", "Svelte"],
     rating: 4.5,
     image: "/joe.jpg",
+    status: "pending",
   },
   {
     id: "10",
-    name: "Priya Sharma",
+    name: "priyanshu",
     skillsOffered: ["HTML", "CSS", "Tailwind"],
     skillsWanted: ["React", "Figma"],
     rating: 4.0,
     image: "/priya.jpg",
+    status: "pending",
   },
   {
     id: "11",
-    name: "Rahul Verma",
+    name: "priyanshu",
     skillsOffered: ["MongoDB", "SQL"],
     skillsWanted: ["Firebase", "AWS"],
     rating: 3.9,
     image: "/rahul.jpg",
+    status: "pending",
   },
    {
     id: "12",
-    name: "manish Verma",
+    name: "priyanshu",
     skillsOffered: ["MongoDB", "SQL"],
     skillsWanted: ["Firebase", "AWS"],
     rating: 3.9,
     image: "/rahul.jpg",
+    status: "pending",
   },
 ];

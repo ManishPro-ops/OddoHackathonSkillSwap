@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!emailOrUsername || !password) {
@@ -16,6 +18,9 @@ const LoginPage = () => {
     const result = await verifyLogin(emailOrUsername, password);
     if (result.success) {
       alert('Login successful');
+    } else if (result.userNotFound) {
+      const goToSignup = window.confirm("User not found. Do you want to sign up?");
+      if (goToSignup) navigate('/signup');
     } else {
       setError(result.message);
     }
@@ -33,7 +38,7 @@ const LoginPage = () => {
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        return { success: false, message: 'Username or password is incorrect' };
+        return { success: false, userNotFound: true, message: 'User not found' };
       } else {
         return { success: false, message: 'Something went wrong. Try again.' };
       }
@@ -66,7 +71,7 @@ const LoginPage = () => {
             <label className="block text-[#3585c0] font-semibold mb-1">Email or Username</label>
             <input
               type="text"
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-#2f76ac"
+              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2f76ac]"
               value={emailOrUsername}
               onChange={(e) => setEmailOrUsername(e.target.value)}
             />
@@ -76,7 +81,7 @@ const LoginPage = () => {
             <label className="block text-[#3585c0] font-semibold mb-1">Password</label>
             <input
               type="password"
-              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-#2f76ac"
+              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2f76ac]"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -92,6 +97,11 @@ const LoginPage = () => {
           >
             Login
           </button>
+
+          <div className="mt-4 text-center text-sm text-gray-600">
+            Don't have an account?{" "}
+            <Link to="/signup" className="text-[#3585c0] hover:underline">Sign up</Link>
+          </div>
 
           <div className="mt-6 text-center text-gray-500">or continue with</div>
 
